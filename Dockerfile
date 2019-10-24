@@ -19,8 +19,7 @@ COPY --from=codecheckout /app/node/ ./
 RUN npm install --prod
 
 FROM scratch
-WORKDIR /app
-COPY --from=builder /node/out/Release/node ./
+COPY --from=builder /node/out/Release/node /bin
 COPY --from=sourcecode /app ./
 EXPOSE 8080
-#ENTRYPOINT ["node/node", "app.js"]
+ENTRYPOINT ["node", "app.js"]
