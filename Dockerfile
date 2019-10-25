@@ -21,8 +21,9 @@ COPY  --from=codecheckout /app/node/views ./views
 RUN npm install --prod
 
 FROM scratch
-COPY --from=builder /node/out/Release/node /node
+WORKDIR /usr/local/bin
+COPY --from=builder /node/out/Release/node ./
 COPY --from=sourcecode /app ./
-ENV PATH "$PATH:/node"
+#ENV PATH "$PATH:/node"
 EXPOSE 8080
-ENTRYPOINT ["/node", "app.js"]
+ENTRYPOINT ["node", "app.js"]
